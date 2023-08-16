@@ -7,7 +7,7 @@
 
 import Foundation
 class APIEndPoints {
-    static let baseUrl = "https://newsapi.org/v2"
-    static let topHeadlines = "/top-headlines"
+    static let baseUrl = "https://newsapi.org/v2/"
+    static let topHeadlines = "top-headlines"
 
 }

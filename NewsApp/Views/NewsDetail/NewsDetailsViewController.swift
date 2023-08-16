@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class NewsDetailsViewController: BaseViewController {
 
@@ -34,7 +35,8 @@ class NewsDetailsViewController: BaseViewController {
     
     @IBAction func fullStoryButtonTapped(_ sender: UIButton) {
         if let fullStoryUrl = viewModel.fullStoryUrl {
-            UIApplication.shared.open(fullStoryUrl, options: [:], completionHandler: nil)
+            let safariViewController = SFSafariViewController(url: fullStoryUrl)
+            present(safariViewController, animated: true, completion: nil)
         }
     }
 }
