@@ -4,18 +4,10 @@
 
 # CocoaPods
 #
-PSNews/Pods/
 /**/Podfile.lock
 /Pods
 .DS_Store
-PSNews/**/Podfile.lock
-PSNews/PSNews/Pods
-PSNews/Pods/
-PSNews/DerivedData
-/Pods
-.DS_Store
-PSNews/**/Podfile.lock
-PSNews/PSNews/Pods
+
 *.xcbkptlist
 *.xcworkspacedata
 *.xcworkspace
