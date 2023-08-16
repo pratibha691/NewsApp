@@ -1,0 +1,45 @@
+{
+  "status": "ok",
+  "totalResults": 38,
+  "articles": [
+    {
+      "source": {
+        "id": null,
+        "name": "NDTV News"
+      },
+      "author": null,
+      "title": "Tiranga Trumps Terror As J&K Independence Day Celebrations See Huge Rush - NDTV",
+      "description": "NDTV.com: India, Business, Bollywood, Cricket, Video and Breaking News",
+      "url": "https://www.ndtv.com/news",
+      "urlToImage": "https://cdn.ndtv.com/common/images/ogndtv.png",
+      "publishedAt": "2023-08-15T06:04:25Z",
+      "content": "Prime Minister Narendra Modi on Tuesday highlighted the importance of regional languages during his Independence Day speech from the ramparts of the iconic Red Fort. Referring to the recent move by t… [+1993 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "Hindustan Times"
+      },
+      "author": "HT News Desk",
+      "title": "CJI Chandrachud's folded hand gesture as PM lauds Supreme Court for this move - Hindustan Times",
+      "description": "PM Modi emphasized the importance of mother tongue in his Independence Day speech, praising the Supreme Court's move to provide judgments in regional languages. | Latest News India",
+      "url": "https://www.hindustantimes.com/india-news/video-cji-chandrachuds-folded-hand-gesture-as-pm-modi-lauds-supreme-court-for-this-move-101692077317985.html",
+      "urlToImage": "https://www.hindustantimes.com/ht-img/img/2023/08/15/1600x900/chief_justice_of_India_independence_day_2023_1692077311686_1692077311898.PNG",
+      "publishedAt": "2023-08-15T06:00:29Z",
+      "content": "Prime Minister Narendra Modi on Tuesday highlighted the importance of regional languages during his Independence Day speech from the ramparts of the iconic Red Fort. Referring to the recent move by t… [+1993 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "Bar & Bench - Indian Legal News"
+      },
+      "author": "Satyendra Wankhade, Neha Joshi",
+      "title": "Bharatiya Nyaya Sanhita, 2023: New and repealed provisions, drafting errors and more - Bar & Bench - Indian Legal News",
+      "description": "The Central government on August 11 introduced three new Bills in the Lok Sabha to replace the Indian Penal Code (IPC), the Code of Criminal Procedure (CrPC) an",
+      "url": "https://www.barandbench.com/news/bharatiya-nyaya-sanhita-2023-changes-and-highlights",
+      "urlToImage": "https://gumlet.assettype.com/barandbench%2F2023-08%2F4e3c1f82-7235-4607-a1f5-7966aacc6656%2FDELHI__WEB_PAGE_1600x900yut.jpg?w=1200&auto=format%2Ccompress&ogImage=true&enlarge=true",
+      "publishedAt": "2023-08-15T05:19:50Z",
+      "content": "Terrorist act\r\nIn another first, a 'terrorist act' has been defined under the code.\r\nAs per Section 111(1), a person is considered to have committed a terrorist act if they intentionally engage in an… [+648 chars]"
+    }
+  ]
+}

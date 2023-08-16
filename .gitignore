@@ -1,0 +1,39 @@
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+# CocoaPods
+#
+PSNews/Pods/
+/**/Podfile.lock
+/Pods
+.DS_Store
+PSNews/**/Podfile.lock
+PSNews/PSNews/Pods
+PSNews/Pods/
+PSNews/DerivedData
+/Pods
+.DS_Store
+PSNews/**/Podfile.lock
+PSNews/PSNews/Pods
+*.xcbkptlist
+*.xcworkspacedata
+*.xcworkspace
+*.xcuserstate
+*.xcuserstate
+*.lock
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+#
+Packages/
+Package.pins
+Package.resolved
+.swiftpm
