@@ -13,11 +13,17 @@ class APIManager {
         return  Bundle.main.infoDictionary?["ApiKey"] as? String
     }
     
-     func request<T: Decodable>(_ endpoint: String, method: HTTPMethod = .get, parameters: [String: Any]? = nil, responseType: T.Type) -> Promise<T> {
+    /// Makes a network request to the specified API endpoint and returns a Promise with the decoded response.
+    /// - Parameters:
+    ///   - endpoint: The API endpoint to request data from.
+    ///   - method: The HTTP method for the request. Default is `.get`.
+    ///   - parameters: Optional parameters to include in the request body.
+    ///   - responseType: The type to decode the JSON response into.
+    /// - Returns: A Promise that resolves with the decoded response or rejects with an error.
+    func request<T: Decodable>(_ endpoint: String, method: HTTPMethod = .get, parameters: [String: Any]? = nil, responseType: T.Type) -> Promise<T> {
         return Promise { seal in
             var urlString = "\(APIEndPoints.baseUrl)\(endpoint)"
             if let apiKey = apiKey {
-                // Use the apiKey value in your code
                 urlString = "\(urlString)&apiKey=\(apiKey)"
             }
             
@@ -28,17 +34,22 @@ class APIManager {
             
             var request = URLRequest(url: url)
             request.httpMethod = method.rawValue
-            do {
-                if let params = parameters {
+            
+            // Check if parameters are provided and add them to the request body
+            if let params = parameters {
+                do {
                     let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
                     request.httpBody = jsonData
+                } catch {
+                    // Handle serialization error
+                    seal.reject(error)
+                    return
                 }
-            } catch {
-                print("Error serializing JSON: \(error)")
             }
-
+            
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 if let error = error {
+                    // Handle network error
                     seal.reject(error)
                     return
                 }
@@ -49,6 +60,7 @@ class APIManager {
                         let responseObject = try decoder.decode(responseType, from: data)
                         seal.fulfill(responseObject)
                     } catch {
+                        // Handle decoding error
                         seal.reject(error)
                     }
                 }
@@ -56,6 +68,7 @@ class APIManager {
             task.resume()
         }
     }
+
 }
 
 enum APIError: Error {

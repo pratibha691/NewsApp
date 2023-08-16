@@ -13,7 +13,11 @@ extension UIViewController {
         case main = "Main"
         // Add more storyboard names here as needed
     }
-    
+    /// Instantiates a view controller of the specified type from a storyboard.
+    /// - Parameters:
+    ///   - named: The name of the storyboard where the view controller is located. Default is `.main`.
+    ///   - identifier: The optional identifier of the view controller in the storyboard. If not provided, the identifier is inferred from the view controller's type.
+    /// - Returns: An instance of the specified view controller type.
     static func instantiateFromStoryboard<T: UIViewController>(named storyboardName: StoryboardName = .main, identifier: String? = nil) -> T {
         let storyboard = UIStoryboard(name: storyboardName.rawValue, bundle: nil)
         let viewControllerIdentifier = identifier ?? String(describing: T.self)
