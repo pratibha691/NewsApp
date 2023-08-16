@@ -9,16 +9,20 @@ import Foundation
 import UIKit
 
 class BaseViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
     private var loadingSpinner: UIActivityIndicatorView!
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavigationBar()
     }
     
-    // Setup common navigation bar style
+    // MARK: - Navigation Bar
+    
     private func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .gray
@@ -27,20 +31,23 @@ class BaseViewController: UIViewController {
         ]
     }
     
-    // Show loading spinner
+    // MARK: - Loading Spinner
+    
     func showLoading() {
         if loadingSpinner == nil {
             loadingSpinner = UIActivityIndicatorView(style: .medium)
-            loadingSpinner?.center = view.center
+            loadingSpinner.center = view.center
             view.addSubview(loadingSpinner)
         }
-        loadingSpinner?.startAnimating()
+        loadingSpinner.startAnimating()
     }
     
-    // Hide loading spinner
     func hideLoading() {
         loadingSpinner?.stopAnimating()
     }
+    
+    // MARK: - Alert
+    
     func showAlert(title: String, message: String, actions: [UIAlertAction] = []) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

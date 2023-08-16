@@ -39,6 +39,8 @@ class NewsHeadlinesViewController: BaseViewController {
     }
 }
 
+// MARK: - TableView Delegates and DataSource 
+
 extension NewsHeadlinesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
