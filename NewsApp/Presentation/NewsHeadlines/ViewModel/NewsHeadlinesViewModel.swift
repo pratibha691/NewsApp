@@ -11,9 +11,9 @@ class NewsHeadlinesViewModel {
     
     var newsArticles: [NewsArticle] = []
 
-    let newsHeadlinesUseCase: FetchNewsHeadlinesUseCase
+    let newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol
     
-    init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCase = FetchNewsHeadlinesUseCase()) {
+    init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol = FetchNewsHeadlinesUseCase()) {
         self.newsHeadlinesUseCase = newsHeadlinesUseCase
     }
     

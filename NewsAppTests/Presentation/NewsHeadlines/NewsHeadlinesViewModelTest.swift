@@ -13,11 +13,11 @@ final class NewsHeadlinesViewModelTest: XCTestCase {
 
     var viewModel: NewsHeadlinesViewModel!
     
-    class MockFetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCase {
+    class MockFetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol {
         var newsArticles: [NewsArticle]?
         var error: Error?
         
-        override func execute() -> Promise<NewsApiResponse> {
+         func execute() -> Promise<NewsApiResponse> {
             if let error = error {
                 return Promise(error: error)
             }

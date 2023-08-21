@@ -18,14 +18,14 @@ class NewsHeadlinesRequest: BaseRequest {
 }
 
 class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
-    private let apiManager: APIManager
+    private let apiService: ServiceProtocol
     
-    init(apiManager: APIManager = APIManager()) {
-        self.apiManager = apiManager
+    init(apiService: ServiceProtocol = APIManager()) {
+        self.apiService = apiService
     }
     
     func getNewsHeadlines() -> Promise<NewsApiResponse> {
         let request = NewsHeadlinesRequest()
-        return apiManager.request(request, responseType: NewsApiResponse.self)
+        return apiService.request(request, responseType: NewsApiResponse.self)
     }
 }
