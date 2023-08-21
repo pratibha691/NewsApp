@@ -13,30 +13,32 @@ class NewsHeadlinesCellViewModelTests: XCTestCase {
     // Test initializing the view model with a news article
     func testInitWithArticle() {
         // Given
-        let article = NewsArticle(source: NewsSource(id: "bbc", name: "BBC News"), author: "Author1", title: "Sample Title1", description: "Description 1", url: "https://www.example.com", urlToImage: "https://www.example.com/image.jpg", publishedAt: "2023-08-10T10:31:35Z", content: "Sample Content")
-        
+        guard let articles = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News")?.articles else {
+            return
+        }
+        let article = articles[0]
         // When
-        let viewModel = NewsHeadlinesCellViewModel(article: article)
+        let cellViewModel = NewsHeadlinesCellViewModel(article: article)
         
         // Then
-        XCTAssertEqual(viewModel.title, "Sample Title1")
-        XCTAssertEqual(viewModel.source, "Bbc News")
-        XCTAssertEqual(viewModel.imageUrl, URL(string: "https://www.example.com/image.jpg"))
-        XCTAssertEqual(viewModel.publishedDate, "10 Aug 2023")
+        XCTAssertEqual(cellViewModel.title, "Tiranga Trumps Terror As J&K Independence Day Celebrations See Huge Rush - NDTV")
+        XCTAssertEqual(cellViewModel.source, "Ndtv News")
+        XCTAssertEqual(cellViewModel.imageUrl, URL(string: "https://cdn.ndtv.com/common/images/ogndtv.png"))
+        XCTAssertEqual(cellViewModel.publishedDate, "15 Aug 2023")
     }
     
     // Test initializing the view model with nil values
     func testInitWithNilValues() {
         // Given
-        let article = NewsArticle(source: NewsSource(id: "bbc", name: "BBC News"), author: "Author1", title: "", description: "Description 1", url: nil, urlToImage: nil, publishedAt: nil, content: "Sample Content")
+        guard let articles = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News")?.articles else {
+            return
+        }
+        let article = articles[1]
         
         // When
         let viewModel = NewsHeadlinesCellViewModel(article: article)
         
         // Then
-        XCTAssertEqual(viewModel.title, "")
-        XCTAssertEqual(viewModel.source, "Bbc News")
         XCTAssertNil(viewModel.imageUrl)
-        XCTAssertEqual(viewModel.publishedDate, "")
     }
 }

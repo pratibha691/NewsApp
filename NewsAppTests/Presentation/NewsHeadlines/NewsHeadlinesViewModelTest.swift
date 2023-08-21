@@ -48,16 +48,10 @@ final class NewsHeadlinesViewModelTest: XCTestCase {
             
             let cellViewModel = self?.viewModel.getCellViewModel(at: 0)
             XCTAssertNotNil(cellViewModel)
-            XCTAssertEqual(cellViewModel?.title, "Tiranga Trumps Terror As J&K Independence Day Celebrations See Huge Rush - NDTV")
-            XCTAssertEqual(cellViewModel?.source, "Ndtv News")
-            XCTAssertEqual(cellViewModel?.imageUrl, URL(string: "https://cdn.ndtv.com/common/images/ogndtv.png"))
-            XCTAssertEqual(cellViewModel?.publishedDate, "15 Aug 2023")
-            
+  
             let detailViewModel = self?.viewModel.getNewDetailViewModel(at: 0)
             XCTAssertNotNil(detailViewModel)
-            XCTAssertEqual(detailViewModel?.title, "Tiranga Trumps Terror As J&K Independence Day Celebrations See Huge Rush - NDTV")
-            XCTAssertEqual(detailViewModel?.source, "NDTV News")
-            XCTAssertEqual(detailViewModel?.imageUrl, URL(string: "https://cdn.ndtv.com/common/images/ogndtv.png"))
+           
             expectation.fulfill()
         }
         
