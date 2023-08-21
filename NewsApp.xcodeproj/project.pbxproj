@@ -171,8 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				CA40A4172A8FB30000835911 /* APIManagerTest.swift */,
-				CA40A4192A93339300835911 /* MockUrlSession.swift */,
 				CAEFF8762A8C9BDA0075A850 /* MockResponseManager.swift */,
+				CA40A4192A93339300835911 /* MockUrlSession.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
