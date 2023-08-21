@@ -52,7 +52,7 @@ class APIManager: ServiceProtocol {
             let responseObject = try decoder.decode(T.self, from: data)
             seal.fulfill(responseObject)
         } catch {
-            seal.reject(error)
+            seal.reject(APIError.decodingError)
         }
     }
 }

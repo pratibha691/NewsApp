@@ -14,12 +14,12 @@ class HeadlinesTableViewCell: UITableViewCell {
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    func configure(with article: NewsArticle) {
-        headingLabel.text = article.title
-        sourceLabel.text = "  \(article.source.name.capitalized)  "
-        if let urlString = article.urlToImage, let url = URL(string: urlString) {
-            newsImageView.kf.setImage(with: url)
+    func configure(with viewModel: NewsHeadlinesCellViewModel) {
+        headingLabel.text = viewModel.title
+        sourceLabel.text = "  \(viewModel.source)  "
+        if let imageUrl = viewModel.imageUrl {
+            newsImageView.kf.setImage(with: imageUrl)
         }
-        dateLabel.text = article.publishedAt?.valueOrEmpty.formattedDate()
+        dateLabel.text = viewModel.publishedDate
     }
 }

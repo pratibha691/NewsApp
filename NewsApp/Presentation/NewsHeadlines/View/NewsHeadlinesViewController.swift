@@ -49,18 +49,18 @@ extension NewsHeadlinesViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: HeadlinesTableViewCell = tableView.dequeueCell(forIndexPath: indexPath)
-        if let article = viewModel.article(at: indexPath.row) {
+        if let cellViewModel = viewModel.getCellViewModel(at: indexPath.row) {
             // Configure the cell with the article data
-            cell.configure(with: article)
+            cell.configure(with: cellViewModel)
         }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let article = viewModel.article(at: indexPath.row) else {
+        guard let detailViewModel = viewModel.getNewDetailViewModel(at: indexPath.row) else {
             return
         }
         let newsDetailsVC: NewsDetailsViewController = NewsDetailsViewController.instantiateFromStoryboard(named: .main)
-        newsDetailsVC.viewModel = NewsDetailsViewModel(newsArticle: article)
+        newsDetailsVC.viewModel = detailViewModel
         navigationController?.pushViewController(newsDetailsVC, animated: true)
     }
 }

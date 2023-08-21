@@ -8,9 +8,6 @@
 import Foundation
 extension String {
     
-    var valueOrEmpty: String {
-        return isEmpty ? "" : self
-    }
     func formattedDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -21,11 +18,8 @@ extension String {
         return ""
     }
 }
-
 extension Optional where Wrapped == String {
-    
-    var valueOrEmpty: String {
+    func orEmpty() -> String {
         return self ?? ""
     }
-
 }

@@ -15,7 +15,8 @@ protocol ServiceProtocol {
 enum APIError: Error {
     case invalidURL
     case noData
-
+    case networkError
+    case decodingError
 }
 
 enum HTTPMethod: String {

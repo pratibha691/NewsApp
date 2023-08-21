@@ -1,12 +1,13 @@
 //
-//  NewsListAPIManager.swift
+//  NewsDataRepositories.swift
 //  NewsApp
 //
-//  Created by Pratibha Gupta on 10/08/23.
+//  Created by Pratibha Gupta on 18/08/23.
 //
 
 import Foundation
 import PromiseKit
+
 class NewsHeadlinesRequest: BaseRequest {
     
     override init() {
@@ -15,15 +16,15 @@ class NewsHeadlinesRequest: BaseRequest {
         requestQueryParam = "country=in"
     }
 }
-class NewsHeadlinesAPIManager {
-  
+
+class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
     private let apiManager: APIManager
     
     init(apiManager: APIManager = APIManager()) {
         self.apiManager = apiManager
     }
     
-    func getNewsArticles() -> Promise<NewsApiResponse> {
+    func getNewsHeadlines() -> Promise<NewsApiResponse> {
         let request = NewsHeadlinesRequest()
         return apiManager.request(request, responseType: NewsApiResponse.self)
     }

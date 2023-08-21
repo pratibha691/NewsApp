@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import PromiseKit
 class NewsHeadlinesViewModel {
     
     var newsArticles: [NewsArticle] = []
-    var apiManager = NewsHeadlinesAPIManager()
 
+    let newsHeadlinesUseCase: FetchNewsHeadlinesUseCase
+    
+    init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCase = FetchNewsHeadlinesUseCase()) {
+        self.newsHeadlinesUseCase = newsHeadlinesUseCase
+    }
+    
     func fetchNewsArticles(completion: @escaping (Error?) -> Void) {
-        apiManager.getNewsArticles()
+         newsHeadlinesUseCase.execute()
             .done { [weak self] articles in
                 self?.newsArticles = articles.articles ?? []
                 completion(nil)
@@ -29,5 +35,17 @@ class NewsHeadlinesViewModel {
             return nil
         }
         return newsArticles[index]
+    }
+    func getCellViewModel(at index: Int) -> NewsHeadlinesCellViewModel? {
+        if  let article = article(at: index) {
+            return NewsHeadlinesCellViewModel(article: article)
+        }
+        return nil
+    }
+    func getNewDetailViewModel(at index: Int) -> NewsDetailsViewModel? {
+        if let article = article(at: index) {
+            return NewsDetailsViewModel(newsArticle: article)
+        }
+        return nil
     }
 }

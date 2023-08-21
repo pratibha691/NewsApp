@@ -15,23 +15,23 @@ class NewsDetailsViewModel {
     }
     
     var title: String {
-        return newsArticle.title.valueOrEmpty
+        return newsArticle.title.orEmpty()
     }
     var source: String {
         return newsArticle.source.name
     }
     var content: String {
-        return newsArticle.content.valueOrEmpty
+        return newsArticle.content.orEmpty()
     }
     var publishedAt: String {
-        return newsArticle.publishedAt.valueOrEmpty.formattedDate()
+        return newsArticle.publishedAt.orEmpty().formattedDate()
     }
     
     var fullStoryUrl: URL? {
-        return URL(string: newsArticle.url ?? "")
+        return URL(string: newsArticle.url.orEmpty())
     }
     var imageUrl: URL? {
-        return URL(string: newsArticle.urlToImage ?? "")
+        return URL(string: newsArticle.urlToImage.orEmpty())
     }
     
 }
