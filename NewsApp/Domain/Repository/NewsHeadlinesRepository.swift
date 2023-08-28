@@ -9,5 +9,5 @@ import Foundation
 import PromiseKit
 
 protocol NewsHeadlinesRepository {
-    func getNewsHeadlines() -> Promise<NewsApiResponse>
+    func getNewsHeadlines() -> Promise<[NewsArticle]>
 }

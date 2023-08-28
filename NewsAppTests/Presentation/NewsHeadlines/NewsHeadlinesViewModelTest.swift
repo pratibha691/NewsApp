@@ -10,18 +10,18 @@ import PromiseKit
 @testable import NewsApp
 
 final class NewsHeadlinesViewModelTest: XCTestCase {
-
+    
     var viewModel: NewsHeadlinesViewModel!
     
     class MockFetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol {
         var newsArticles: [NewsArticle]?
         var error: Error?
         
-         func execute() -> Promise<NewsApiResponse> {
+        func execute() -> Promise<[NewsArticle]> {
             if let error = error {
                 return Promise(error: error)
             }
-            let response = NewsApiResponse(status: "", totalResults: 2, articles: newsArticles)
+            let response = newsArticles ?? []
             return Promise.value(response)
         }
     }
@@ -29,32 +29,34 @@ final class NewsHeadlinesViewModelTest: XCTestCase {
     override func setUp() {
         viewModel = NewsHeadlinesViewModel(newsHeadlinesUseCase: MockFetchNewsHeadlinesUseCase())
     }
+
+    override func tearDown() {
+        viewModel = nil
+        super.tearDown()
+    }
     // Test fetching news articles successfully
     func testFetchNewsArticlesSuccess() {
         // Given
         let expectation = XCTestExpectation(description: "Fetch news articles successfully")
         
-        let mockArticles = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News")?.articles
+        let mockResponse = MockResponseManager.loadMockResponse(ofType: NewsApiResponseDTO.self, from: "News")
         
         if let useCase = viewModel.newsHeadlinesUseCase as? MockFetchNewsHeadlinesUseCase {
-            useCase.newsArticles = mockArticles
-        }        
-        // When
-        viewModel.fetchNewsArticles { [weak self] error in
-            // Then
-            XCTAssertNil(error)
-            XCTAssertEqual(self?.viewModel.numberOfRows(), mockArticles?.count)
+            useCase.newsArticles = NewsArticleDTOMapper.getArticles(dataApiResponse: mockResponse)
+        }
+        viewModel.fetchNewsArticles()
+        viewModel.newsArticles.bind { [weak self] _ in
+            XCTAssertEqual(self?.viewModel.numberOfRows(), 3)
             XCTAssertNotNil(self?.viewModel.article(at: 0))
             
             let cellViewModel = self?.viewModel.getCellViewModel(at: 0)
             XCTAssertNotNil(cellViewModel)
-  
+            
             let detailViewModel = self?.viewModel.getNewDetailViewModel(at: 0)
             XCTAssertNotNil(detailViewModel)
-           
+            
             expectation.fulfill()
         }
-        
         wait(for: [expectation], timeout: 1.0)
     }
     
@@ -67,9 +69,8 @@ final class NewsHeadlinesViewModelTest: XCTestCase {
         if let useCase = viewModel.newsHeadlinesUseCase as? MockFetchNewsHeadlinesUseCase {
             useCase.error = mockError
         }
-        // When
-        viewModel.fetchNewsArticles { [weak self] error in
-            // Then
+        viewModel.fetchNewsArticles()
+        viewModel.errorMessage.bind { [weak self] error in
             XCTAssertNotNil(error)
             XCTAssertEqual(self?.viewModel.numberOfRows(), 0)
             XCTAssertNil(self?.viewModel.article(at: 0))
@@ -80,8 +81,8 @@ final class NewsHeadlinesViewModelTest: XCTestCase {
             XCTAssertNil(detailViewModel)
             expectation.fulfill()
         }
-        
         wait(for: [expectation], timeout: 1.0)
-    }
 
+    }
+    
 }

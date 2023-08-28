@@ -7,41 +7,46 @@
 
 import Foundation
 import PromiseKit
+
 class NewsHeadlinesViewModel {
     
-    var newsArticles: [NewsArticle] = []
-
+    var newsArticles: Observable<[NewsArticle]> = Observable([])
+    var errorMessage: Observable<String> = Observable("")
+    
     let newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol
     
-    init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol = FetchNewsHeadlinesUseCase()) {
+    init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol) {
         self.newsHeadlinesUseCase = newsHeadlinesUseCase
     }
     
-    func fetchNewsArticles(completion: @escaping (Error?) -> Void) {
-         newsHeadlinesUseCase.execute()
+    func fetchNewsArticles() {
+        newsHeadlinesUseCase.execute()
             .done { [weak self] articles in
-                self?.newsArticles = articles.articles ?? []
-                completion(nil)
+                self?.newsArticles.value = articles
             }
             .catch { error in
-                completion(error)
+                self.errorMessage.value = error.localizedDescription
             }
     }
+    
     func numberOfRows() -> Int {
-        return newsArticles.count
+        return newsArticles.value.count
     }
+    
     func article(at index: Int) -> NewsArticle? {
-        guard  index < newsArticles.count else {
+        guard  index < numberOfRows() else {
             return nil
         }
-        return newsArticles[index]
+        return newsArticles.value[index]
     }
+    
     func getCellViewModel(at index: Int) -> NewsHeadlinesCellViewModel? {
         if  let article = article(at: index) {
             return NewsHeadlinesCellViewModel(article: article)
         }
         return nil
     }
+    
     func getNewDetailViewModel(at index: Int) -> NewsDetailsViewModel? {
         if let article = article(at: index) {
             return NewsDetailsViewModel(newsArticle: article)

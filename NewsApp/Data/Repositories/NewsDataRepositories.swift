@@ -24,8 +24,17 @@ class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
         self.apiService = apiService
     }
     
-    func getNewsHeadlines() -> Promise<NewsApiResponse> {
-        let request = NewsHeadlinesRequest()
-        return apiService.request(request, responseType: NewsApiResponse.self)
+    func getNewsHeadlines() -> Promise<[NewsArticle]> {
+        
+        return Promise { seal in
+            let request = NewsHeadlinesRequest()
+            apiService.request(request, responseType: NewsApiResponseDTO.self)
+                .done { response in
+                    seal.fulfill(NewsArticleDTOMapper.getArticles(dataApiResponse: response))
+                }
+                .catch { error in
+                    seal.reject(error)
+                }
+        }
     }
 }

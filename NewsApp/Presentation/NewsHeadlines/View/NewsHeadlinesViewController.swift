@@ -18,24 +18,32 @@ class NewsHeadlinesViewController: BaseViewController {
         }
     }
     
-    var viewModel = NewsHeadlinesViewModel()
+    var viewModel: NewsHeadlinesViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeViewModel()
         title = NAConstants.headlineTitle
         fetchNewsArticles()
     }
     
+    func initializeViewModel() {
+        let useCase = FetchNewsHeadlinesUseCase()
+        viewModel = NewsHeadlinesViewModel(newsHeadlinesUseCase: useCase)
+    }
+    
     private func fetchNewsArticles() {
         showLoading()
-        viewModel.fetchNewsArticles { [weak self] error in
+        viewModel.newsArticles.bind { [weak self] _ in
             self?.hideLoading()
-            if let error = error {
-                self?.showAlert(title: NAConstants.Error.errorTitle, message: "\(error.localizedDescription)")
-            } else {
-                self?.tableView.reloadData()
-            }
+            self?.tableView.reloadData()
         }
+        viewModel.errorMessage.bind { [weak self] error in
+            self?.hideLoading()
+            self?.showAlert(title: NAConstants.Error.errorTitle, message: "\(error)")
+        }
+        viewModel.fetchNewsArticles()
+        
     }
 }
 
@@ -55,6 +63,7 @@ extension NewsHeadlinesViewController: UITableViewDataSource, UITableViewDelegat
         }
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let detailViewModel = viewModel.getNewDetailViewModel(at: indexPath.row) else {
             return

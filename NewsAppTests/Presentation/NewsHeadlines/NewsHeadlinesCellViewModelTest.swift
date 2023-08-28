@@ -10,35 +10,32 @@ import PromiseKit
 
 class NewsHeadlinesCellViewModelTests: XCTestCase {
     
-    // Test initializing the view model with a news article
-    func testInitWithArticle() {
-        // Given
-        guard let articles = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News")?.articles else {
+    var articles: [NewsArticle]!
+    
+    override func setUp() {
+        guard let response = MockResponseManager.loadMockResponse(ofType: NewsApiResponseDTO.self, from: "News") else {
             return
         }
-        let article = articles[0]
-        // When
-        let cellViewModel = NewsHeadlinesCellViewModel(article: article)
+        articles = NewsArticleDTOMapper.getArticles(dataApiResponse: response)
+       
+    }
+    override func tearDown() {
+        articles = nil
+        super.tearDown()
+    }
+    // Test initializing the view model with a news article
+    func testInitWithArticle() {
         
-        // Then
+        let cellViewModel = NewsHeadlinesCellViewModel(article: articles[0])
         XCTAssertEqual(cellViewModel.title, "Tiranga Trumps Terror As J&K Independence Day Celebrations See Huge Rush - NDTV")
-        XCTAssertEqual(cellViewModel.source, "Ndtv News")
+        XCTAssertEqual(cellViewModel.source, "NDTV News")
         XCTAssertEqual(cellViewModel.imageUrl, URL(string: "https://cdn.ndtv.com/common/images/ogndtv.png"))
         XCTAssertEqual(cellViewModel.publishedDate, "15 Aug 2023")
     }
-    
     // Test initializing the view model with nil values
     func testInitWithNilValues() {
-        // Given
-        guard let articles = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News")?.articles else {
-            return
-        }
-        let article = articles[1]
         
-        // When
-        let viewModel = NewsHeadlinesCellViewModel(article: article)
-        
-        // Then
+        let viewModel = NewsHeadlinesCellViewModel(article: articles[1])
         XCTAssertNil(viewModel.imageUrl)
     }
 }

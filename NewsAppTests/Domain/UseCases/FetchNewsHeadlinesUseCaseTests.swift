@@ -12,10 +12,10 @@ class FetchNewsHeadlinesUseCaseTests: XCTestCase {
     
     // Mock NewsHeadlinesRepository for testing
     class MockNewsHeadlinesRepository: NewsHeadlinesRepository {
-        var newsApiResponse: NewsApiResponse?
+        var newsApiResponse: [NewsArticle]?
         var error: Error?
         
-        func getNewsHeadlines() -> Promise<NewsApiResponse> {
+        func getNewsHeadlines() -> Promise<[NewsArticle]> {
             if let error = error {
                 return Promise(error: error)
             }
@@ -25,25 +25,34 @@ class FetchNewsHeadlinesUseCaseTests: XCTestCase {
             return Promise(error: APIError.noData) // Default to no data
         }
     }
+    var repository: MockNewsHeadlinesRepository!
+
+    override func setUp() {
+        super.setUp()
+        repository = MockNewsHeadlinesRepository()
+    }
     
+    override func tearDown() {
+        repository = nil
+        super.tearDown()
+    }
     // Test fetching news headlines successfully
     func testFetchNewsHeadlinesSuccess() {
         // Given
-        guard let mockApiResponse = MockResponseManager.loadMockResponse(ofType: NewsApiResponse.self, from: "News") else {
+        guard let mockApiResponse = MockResponseManager.loadMockResponse(ofType: NewsApiResponseDTO.self, from: "News") else {
             return
         }
-        let repository = MockNewsHeadlinesRepository()
-        repository.newsApiResponse = mockApiResponse
+        repository.newsApiResponse = NewsArticleDTOMapper.getArticles(dataApiResponse: mockApiResponse)
         
         let useCase = FetchNewsHeadlinesUseCase(newsRepository: repository)
         
         // When
         let expectation = XCTestExpectation(description: "Fetch news headlines successfully")
-        let promise: Promise<NewsApiResponse> = useCase.execute()
+        let promise: Promise<[NewsArticle]> = useCase.execute()
         
         promise.done { response in
             // Then
-            XCTAssertEqual(response.articles?.count, 3)
+            XCTAssertEqual(response.count, 3)
             expectation.fulfill()
         }.catch { error in
             XCTFail("Error should not occur: \(error)")
@@ -56,14 +65,13 @@ class FetchNewsHeadlinesUseCaseTests: XCTestCase {
     func testFetchNewsHeadlinesError() {
         // Given
         let mockError = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
-        let repository = MockNewsHeadlinesRepository()
         repository.error = mockError
         
         let useCase = FetchNewsHeadlinesUseCase(newsRepository: repository)
         
         // When
         let expectation = XCTestExpectation(description: "Fetch news headlines with error")
-        let promise: Promise<NewsApiResponse> = useCase.execute()
+        let promise: Promise<[NewsArticle]> = useCase.execute()
         
         promise.done { _ in
             XCTFail("Promise should not fulfill")
@@ -79,13 +87,12 @@ class FetchNewsHeadlinesUseCaseTests: XCTestCase {
     // Test fetching news headlines with no data
     func testFetchNewsHeadlinesNoData() {
         // Given
-        let repository = MockNewsHeadlinesRepository()
-        
+
         let useCase = FetchNewsHeadlinesUseCase(newsRepository: repository)
         
         // When
         let expectation = XCTestExpectation(description: "Fetch news headlines with no data")
-        let promise: Promise<NewsApiResponse> = useCase.execute()
+        let promise: Promise<[NewsArticle]> = useCase.execute()
         
         promise.done { _ in
             XCTFail("Promise should not fulfill")

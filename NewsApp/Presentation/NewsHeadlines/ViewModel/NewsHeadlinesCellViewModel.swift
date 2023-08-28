@@ -17,7 +17,7 @@ struct NewsHeadlinesCellViewModel {
 extension NewsHeadlinesCellViewModel {
     init(article: NewsArticle) {
         title = article.title.orEmpty()
-        source = article.source.name.capitalized
+        source = article.sourceName ?? ""
         imageUrl = URL(string: article.urlToImage.orEmpty())
         let date = article.publishedAt?.formattedDate()
         publishedDate = date.orEmpty()

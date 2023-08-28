@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct NewsApiResponse: Decodable {
-    let status: String?
+struct NewsApiResponseDTO: Decodable {
+    let status: String
     let totalResults: Int?
-    let articles: [NewsArticle]?
+    let articles: [NewsArticleDTO]?
 }
 
-struct NewsArticle: Decodable {
-    let source: NewsSource
+struct NewsArticleDTO: Decodable {
+    let source: NewsSourceDTO
     let author: String?
     let title: String?
     let description: String?
@@ -24,7 +24,7 @@ struct NewsArticle: Decodable {
     let content: String?
 }
 
-struct NewsSource: Decodable {
+struct NewsSourceDTO: Decodable {
     let id: String?
     let name: String
 }

@@ -13,12 +13,11 @@ class NewsDetailsViewModel {
     init(newsArticle: NewsArticle) {
         self.newsArticle = newsArticle
     }
-    
     var title: String {
         return newsArticle.title.orEmpty()
     }
     var source: String {
-        return newsArticle.source.name
+        return newsArticle.sourceName ?? ""
     }
     var content: String {
         return newsArticle.content.orEmpty()
@@ -26,7 +25,6 @@ class NewsDetailsViewModel {
     var publishedAt: String {
         return newsArticle.publishedAt.orEmpty().formattedDate()
     }
-    
     var fullStoryUrl: URL? {
         return URL(string: newsArticle.url.orEmpty())
     }

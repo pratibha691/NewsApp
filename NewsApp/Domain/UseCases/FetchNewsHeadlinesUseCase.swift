@@ -9,7 +9,7 @@ import Foundation
 import PromiseKit
 
 protocol FetchNewsHeadlinesUseCaseProtocol {
-    func execute() -> Promise<NewsApiResponse>
+    func execute() -> Promise<[NewsArticle]>
 }
 
 class FetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol {
@@ -19,7 +19,7 @@ class FetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol {
         self.newsRepository = newsRepository
     }
     
-    func execute() -> Promise<NewsApiResponse> {
+    func execute() -> Promise<[NewsArticle]> {
         return newsRepository.getNewsHeadlines()
     }
 }

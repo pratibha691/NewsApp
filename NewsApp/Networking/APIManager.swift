@@ -14,6 +14,7 @@ class APIManager: ServiceProtocol {
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
+    
     func request<T: Decodable>(_ service: RequestProtocol, responseType: T.Type) -> Promise<T> {
         return Promise { seal in
             

@@ -20,7 +20,7 @@ final class NewsDetailsViewControllerSnapshotTests: FBSnapshotTestCase {
     
     func testNewsDetailsViewController() {
         let newsDetailsVC: NewsDetailsViewController = NewsDetailsViewController.instantiateFromStoryboard()
-        newsDetailsVC.viewModel = NewsDetailsViewModel(newsArticle: NewsArticle(source: NewsSource(id: "bbc", name: "BBC News"), author: "Author1", title: "Sample Title", description: "Description 1", url: "https://www.example.com", urlToImage: "https://www.example.com/image.jpg", publishedAt: "2023-08-10T10:31:35Z", content: "Sample Content"))
+        newsDetailsVC.viewModel = NewsDetailsViewModel(newsArticle: NewsArticle(sourceName: "BBC News", title: "Sample Title", url: "https://www.example.com", urlToImage: "https://www.example.com/image.jpg", publishedAt: "2023-08-10T10:31:35Z", content: "Sample Content"))
 
         FBSnapshotVerifyView(newsDetailsVC.view)
     }

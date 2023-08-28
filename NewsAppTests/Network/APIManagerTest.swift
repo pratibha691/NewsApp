@@ -11,11 +11,21 @@ import PromiseKit
 
 class APIManagerTests: XCTestCase {
     
+    var session: MockURLSession!
+    
+    override func setUp() {
+        super.setUp()
+        session = MockURLSession()
+    }
+    
+    override func tearDown() {
+        session = nil
+        super.tearDown()
+    }
     // Test successful API request
     func testAPIRequestSuccess() {
         // Given
         
-        let session = MockURLSession()
         session.data = """
             {
                 "title": "Test ",
@@ -33,7 +43,7 @@ class APIManagerTests: XCTestCase {
         
         promise.done { response in
             // Then
-           XCTAssertNotNil(response)
+            XCTAssertNotNil(response)
             expectation.fulfill()
         }.catch { error in
             XCTFail("Error should not occur: \(error)")
@@ -47,7 +57,6 @@ class APIManagerTests: XCTestCase {
         // Given
         let mockError = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
         
-        let session = MockURLSession()
         session.error = mockError
         
         let apiManager = APIManager(session: session)
@@ -68,30 +77,29 @@ class APIManagerTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-     // Test API request with no data
-     func testAPIRequestNoData() {
-         
-         let session = MockURLSession()
-         session.data = nil
-         
-         let apiManager = APIManager(session: session)
-         let request = MockRequest()
-         
-         // When
-         let expectation = XCTestExpectation(description: "API request with no data")
-         let promise: Promise<MockResponse> = apiManager.request(request, responseType: MockResponse.self)
-         
-         promise.done { _ in
-             XCTFail("Promise should not fulfill")
-         }.catch { error in
-             // Then
-             XCTAssertTrue(error is APIError)
-             XCTAssertEqual(error as? APIError, APIError.noData)
-             expectation.fulfill()
-         }
-         
-         wait(for: [expectation], timeout: 1.0)
-     }
+    // Test API request with no data
+    func testAPIRequestNoData() {
+        
+        session.data = nil
+        
+        let apiManager = APIManager(session: session)
+        let request = MockRequest()
+        
+        // When
+        let expectation = XCTestExpectation(description: "API request with no data")
+        let promise: Promise<MockResponse> = apiManager.request(request, responseType: MockResponse.self)
+        
+        promise.done { _ in
+            XCTFail("Promise should not fulfill")
+        }.catch { error in
+            // Then
+            XCTAssertTrue(error is APIError)
+            XCTAssertEqual(error as? APIError, APIError.noData)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
     // Test API request with decoding error
     func testAPIRequestDecodingError() {
         // Given
@@ -101,7 +109,6 @@ class APIManagerTests: XCTestCase {
             }
             """.data(using: .utf8)
         
-        let session = MockURLSession()
         session.data = mockData
         
         let apiManager = APIManager(session: session)
@@ -134,7 +141,7 @@ extension APIManagerTests {
         var additionalHeaders: [String: String]?
         let requestURL: String = ""
     }
-
+    
     struct MockResponse: Decodable {
         var title: String = ""
         var description: String = ""
