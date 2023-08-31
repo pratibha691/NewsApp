@@ -22,14 +22,8 @@ class NewsHeadlinesViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeViewModel()
         title = NAConstants.headlineTitle
         fetchNewsArticles()
-    }
-    
-    func initializeViewModel() {
-        let useCase = FetchNewsHeadlinesUseCase()
-        viewModel = NewsHeadlinesViewModel(newsHeadlinesUseCase: useCase)
     }
     
     private func fetchNewsArticles() {
@@ -68,8 +62,8 @@ extension NewsHeadlinesViewController: UITableViewDataSource, UITableViewDelegat
         guard let detailViewModel = viewModel.getNewDetailViewModel(at: indexPath.row) else {
             return
         }
-        let newsDetailsVC: NewsDetailsViewController = NewsDetailsViewController.instantiateFromStoryboard(named: .main)
-        newsDetailsVC.viewModel = detailViewModel
+        
+        let newsDetailsVC: NewsDetailsViewController = ViewControllerFactory.createNewsDetailsViewController(viewModel: detailViewModel)
         navigationController?.pushViewController(newsDetailsVC, animated: true)
     }
 }
