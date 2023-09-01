@@ -10,6 +10,8 @@ import UIKit
 
 class NewsHeadlinesViewController: BaseViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -18,13 +20,19 @@ class NewsHeadlinesViewController: BaseViewController {
         }
     }
     
+    // MARK: - Properties
+    
     var viewModel: NewsHeadlinesViewModel!
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = NAConstants.headlineTitle
         fetchNewsArticles()
     }
+    
+    // MARK: - Private Methods
     
     private func fetchNewsArticles() {
         showLoading()
@@ -37,11 +45,10 @@ class NewsHeadlinesViewController: BaseViewController {
             self?.showAlert(title: NAConstants.Error.errorTitle, message: "\(error)")
         }
         viewModel.fetchNewsArticles()
-        
     }
 }
 
-// MARK: - TableView Delegates and DataSource 
+// MARK: - TableView Delegates and DataSource
 
 extension NewsHeadlinesViewController: UITableViewDataSource, UITableViewDelegate {
     

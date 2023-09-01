@@ -19,8 +19,7 @@ final class NewsHeadlinesViewControllerSnapshotTests: FBSnapshotTestCase {
     }
     
     func testNewsDetailsViewController() {
-        let newsHeadlineVC: NewsHeadlinesViewController = NewsHeadlinesViewController.instantiateFromStoryboard()
-        newsHeadlineVC.viewModel = NewsHeadlinesViewModel(newsHeadlinesUseCase: FetchNewsHeadlinesUseCase())
+        let newsHeadlineVC: NewsHeadlinesViewController = ViewControllerFactory.createNewsHeadlinesViewController()
         newsHeadlineVC.viewModel.newsArticles.value = [NewsArticle(sourceName: "BBC News", title: "Sample Title", url: "https://www.example.com", urlToImage: "https://www.example.com/image.jpg", publishedAt: "2023-08-10T10:31:35Z", content: "Sample Content")]
 
         FBSnapshotVerifyView(newsHeadlineVC.view)

@@ -8,7 +8,7 @@
 import Foundation
 import PromiseKit
 
-class NewsHeadlinesRequest: BaseRequest {
+final class NewsHeadlinesRequest: BaseRequest {
     
     override init() {
         super.init()
@@ -17,7 +17,7 @@ class NewsHeadlinesRequest: BaseRequest {
     }
 }
 
-class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
+final class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
     private let apiService: ServiceProtocol
     
     init(apiService: ServiceProtocol) {
