@@ -26,5 +26,5 @@ struct NewsArticleDTO: Decodable {
 
 struct NewsSourceDTO: Decodable {
     let id: String?
-    let name: String
+    let name: String?
 }
