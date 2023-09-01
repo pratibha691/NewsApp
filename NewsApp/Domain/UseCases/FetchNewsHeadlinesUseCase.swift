@@ -15,7 +15,7 @@ protocol FetchNewsHeadlinesUseCaseProtocol {
 class FetchNewsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol {
     private let newsRepository: NewsHeadlinesRepository
  
-    init(newsRepository: NewsHeadlinesRepository = NewsHeadlinesDataRepository()) {
+    init(newsRepository: NewsHeadlinesRepository) {
         self.newsRepository = newsRepository
     }
     

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class NewsDetailsViewModel {
+final class NewsDetailsViewModel {
     
     private let newsArticle: NewsArticle
     

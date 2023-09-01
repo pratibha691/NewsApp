@@ -8,7 +8,7 @@
 import Foundation
 import PromiseKit
 
-class NewsHeadlinesViewModel {
+final class NewsHeadlinesViewModel {
     
     var newsArticles: Observable<[NewsArticle]> = Observable([])
     var errorMessage: Observable<String> = Observable("")

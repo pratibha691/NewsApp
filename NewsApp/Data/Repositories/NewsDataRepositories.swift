@@ -20,7 +20,7 @@ class NewsHeadlinesRequest: BaseRequest {
 class NewsHeadlinesDataRepository: NewsHeadlinesRepository {
     private let apiService: ServiceProtocol
     
-    init(apiService: ServiceProtocol = APIManager()) {
+    init(apiService: ServiceProtocol) {
         self.apiService = apiService
     }
     

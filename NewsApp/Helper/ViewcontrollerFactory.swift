@@ -11,7 +11,8 @@ class ViewControllerFactory {
     
     static func createNewsHeadlinesViewController() -> NewsHeadlinesViewController {
        let newsHeadlinesVC: NewsHeadlinesViewController = NewsHeadlinesViewController.instantiateFromStoryboard(named: .main)
-        let useCase = FetchNewsHeadlinesUseCase()
+        let repository = NewsHeadlinesDataRepository(apiService: APIManager())
+        let useCase = FetchNewsHeadlinesUseCase(newsRepository: repository)
         let viewModel = NewsHeadlinesViewModel(newsHeadlinesUseCase: useCase)
         newsHeadlinesVC.viewModel = viewModel
         return newsHeadlinesVC
