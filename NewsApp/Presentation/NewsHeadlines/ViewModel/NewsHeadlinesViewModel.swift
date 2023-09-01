@@ -10,14 +10,22 @@ import PromiseKit
 
 final class NewsHeadlinesViewModel {
     
+    // MARK: - Properties
+    
     var newsArticles: Observable<[NewsArticle]> = Observable([])
     var errorMessage: Observable<String> = Observable("")
     
-    let newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol
+    // MARK: - Dependencies
+    
+     let newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol
+    
+    // MARK: - Initialization
     
     init(newsHeadlinesUseCase: FetchNewsHeadlinesUseCaseProtocol) {
         self.newsHeadlinesUseCase = newsHeadlinesUseCase
     }
+    
+    // MARK: - Public Methods
     
     func fetchNewsArticles() {
         newsHeadlinesUseCase.execute()
@@ -34,14 +42,14 @@ final class NewsHeadlinesViewModel {
     }
     
     func article(at index: Int) -> NewsArticle? {
-        guard  index < numberOfRows() else {
+        guard index < numberOfRows() else {
             return nil
         }
         return newsArticles.value[index]
     }
     
     func getCellViewModel(at index: Int) -> NewsHeadlinesCellViewModel? {
-        if  let article = article(at: index) {
+        if let article = article(at: index) {
             return NewsHeadlinesCellViewModel(article: article)
         }
         return nil
