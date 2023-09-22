@@ -7,14 +7,19 @@
 
 import Foundation
 
-struct NewsHeadlinesCellViewModel {
+protocol NewsHeadlinesCellViewModelProtocol {
+    var title: String { get }
+    var source: String { get }
+    var imageUrl: URL? { get }
+    var publishedDate: String { get }
+}
+
+struct NewsHeadlinesCellViewModel: NewsHeadlinesCellViewModelProtocol {
     let title: String
     let source: String
     let imageUrl: URL?
     let publishedDate: String
-}
 
-extension NewsHeadlinesCellViewModel {
     init(article: NewsArticle) {
         title = article.title.orEmpty()
         source = article.sourceName ?? ""

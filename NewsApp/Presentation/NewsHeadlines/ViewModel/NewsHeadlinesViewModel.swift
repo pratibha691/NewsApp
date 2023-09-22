@@ -8,7 +8,15 @@
 import Foundation
 import PromiseKit
 
-final class NewsHeadlinesViewModel {
+protocol NewsHeadlinesViewModelProtocol {
+    func fetchNewsArticles()
+    func numberOfRows() -> Int
+    func getCellViewModel(at index: Int) -> NewsHeadlinesCellViewModel?
+    func getNewDetailViewModel(at index: Int) -> NewsDetailsViewModel?
+    var newsArticles: Observable<[NewsArticle]> { get }
+    var errorMessage: Observable<String> { get }
+}
+final class NewsHeadlinesViewModel: NewsHeadlinesViewModelProtocol {
     
     // MARK: - Properties
     

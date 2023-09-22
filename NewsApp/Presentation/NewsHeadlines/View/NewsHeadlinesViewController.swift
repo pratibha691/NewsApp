@@ -22,7 +22,7 @@ class NewsHeadlinesViewController: BaseViewController {
     
     // MARK: - Properties
     
-    var viewModel: NewsHeadlinesViewModel!
+    var viewModel: NewsHeadlinesViewModelProtocol!
     
     // MARK: - View Lifecycle
     
