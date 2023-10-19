@@ -9,7 +9,7 @@ import Foundation
 
 struct NAConstants {
     struct Error {
-        static var errorTitle: String = "Error"
+        static let errorTitle: String = "Error"
     }
-    static var headlineTitle: String = "Headlines"
+    static let headlineTitle: String = "Headlines"
 }
